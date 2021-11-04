@@ -1,4 +1,6 @@
-﻿using Google.Cloud.Firestore;
+//Copyright 2021 Alexandra Dorey / Wellington Fabrics Ltd.
+
+using Google.Cloud.Firestore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
