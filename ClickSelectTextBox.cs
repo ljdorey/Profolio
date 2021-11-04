@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+//Copyright 2021 Alexandra Dorey / Wellington Fabrics Ltd.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
