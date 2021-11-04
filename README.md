@@ -4,7 +4,7 @@ Alexandra Dorey's Portfolio for Interviews
 
 ...A small smattering of code from a past project...
 
-General Design: 
+Project Design: 
 
 1. Data is stored in a no SQL database (Firestore), shared by multiple users and storefront / website in realtime. 
 
