@@ -1,0 +1,359 @@
+﻿<Window
+    x:Class="WFInventory.DocumentSelector"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+    xmlns:vm="clr-namespace:WFInventory.ViewModels"
+    Title="*Document Selctor*"
+    Width="1200"
+    Height="600"
+    Background="{DynamicResource MaterialDesignPaper}"
+    Closing="Window_Closing"
+    FontFamily="{DynamicResource MaterialDesignFont}"
+    ShowInTaskbar="false"
+    TextElement.FontSize="14"
+    TextElement.FontWeight="Medium"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None">
+    <StackPanel Orientation="Vertical">
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBox
+                x:Name="SearchField"
+                Margin="8"
+                materialDesign:HintAssist.FloatingScale="0.75"
+                materialDesign:HintAssist.Hint="Seach For"
+                materialDesign:TextFieldAssist.HasFilledTextField="True"
+                FontSize="16"
+                KeyUp="SearchField_KeyUp"
+                Loaded="SearchField_Loaded"
+                Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                TextChanged="SearchField_TextChanged" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <vm:NoDeselectListView
+                x:Name="DocumentListBox"
+                Width="500"
+                Height="400"
+                ItemsSource="{Binding ItemsToSearch}"
+                MouseDoubleClick="DocumentListBox_MouseDoubleClick"
+                SelectionChanged="DocumentListBox_SelectionChanged"
+                Style="{StaticResource wfBasicListViewEx}">
+                <ListView.Resources>
+                    <!--  Customer  -->
+                    <DataTemplate DataType="{x:Type vm:wf_CustomerDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Width="16"
+                                Height="16"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DeleteNodeCommand}"
+                                Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                                ToolTip="Delete Customer">
+                                <materialDesign:PackIcon
+                                    Width="16"
+                                    Height="16"
+                                    Kind="TrashCan" />
+                            </Button>
+                            <TextBlock Text="{Binding StartText}" />
+                            <TextBlock
+                                Background="{Binding HighlightBrushBG}"
+                                Foreground="{Binding HighlightBrushFG}"
+                                Text="{Binding HighlightedText}" />
+                            <TextBlock Text="{Binding EndText}" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_FabricCutDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding ShowQySection}">
+
+                                <TextBlock Text="Qty:" />
+
+                                <TextBlock Text="{Binding Qty}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Visibility="{Binding ShowSizeSection}">
+                                <TextBlock Text="Width:" />
+                                <TextBlock
+                                    Width="60"
+                                    Padding="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CustomWidth}" />
+                                <TextBlock>
+                                    x
+                                </TextBlock>
+                                <TextBlock Text="Length:" />
+                                <TextBlock
+                                    Width="60"
+                                    Padding="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding CustomHeight}" />
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_SupplierOrderDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding StartText}" />
+                            <TextBlock
+                                Background="{Binding HighlightBrushBG}"
+                                Foreground="{Binding HighlightBrushFG}"
+                                Text="{Binding HighlightedText}" />
+                            <TextBlock Text="{Binding EndText}" />
+                        </StackPanel>
+                    </DataTemplate>
+                    <!--  Product  -->
+                    <DataTemplate DataType="{x:Type vm:wf_ProductDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Width="16"
+                                Height="16"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DeleteNodeCommand}"
+                                Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                                ToolTip="Delete Customer">
+                                <materialDesign:PackIcon
+                                    Width="16"
+                                    Height="16"
+                                    Kind="TrashCan" />
+                            </Button>
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{Binding ThumbnailImage}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding StartText}" />
+                                    <TextBlock
+                                        Background="{Binding HighlightBrushBG}"
+                                        Foreground="{Binding HighlightBrushFG}"
+                                        Text="{Binding HighlightedText}" />
+                                    <TextBlock Text="{Binding EndText}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <!--  Product Sku  -->
+                    <DataTemplate DataType="{x:Type vm:wf_ProductSkuDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Width="16"
+                                Height="16"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DeleteNodeCommand}"
+                                Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                                ToolTip="Delete Sku">
+                                <materialDesign:PackIcon
+                                    Width="16"
+                                    Height="16"
+                                    Kind="TrashCan" />
+                            </Button>
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{Binding MenuImageThumb}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding StartText}" />
+                                    <TextBlock
+                                        Background="{Binding HighlightBrushBG}"
+                                        Foreground="{Binding HighlightBrushFG}"
+                                        Text="{Binding HighlightedText}" />
+                                    <TextBlock Text="{Binding EndText}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                    <!--  ImageEdit  -->
+
+                    <!--  ImageEdit  -->
+
+
+
+                    <DataTemplate DataType="{x:Type vm:wf_ImageEditDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="100"
+                                    Height="100"
+                                    Source="{Binding Thumbnail}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                    <!--  Supplier  -->
+                    <DataTemplate DataType="{x:Type vm:wf_SupplierDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <Button
+                                Width="16"
+                                Height="16"
+                                Margin="2"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DeleteNodeCommand}"
+                                Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                                ToolTip="Delete Customer">
+                                <materialDesign:PackIcon
+                                    Width="16"
+                                    Height="16"
+                                    Kind="TrashCan" />
+                            </Button>
+                            <TextBlock Text="{Binding StartText}" />
+                            <TextBlock
+                                Background="{Binding HighlightBrushBG}"
+                                Foreground="{Binding HighlightBrushFG}"
+                                Text="{Binding HighlightedText}" />
+                            <TextBlock Text="{Binding EndText}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.Resources>
+            </vm:NoDeselectListView>
+            <ListBox
+                x:Name="DataDisplay"
+                Width="400"
+                Height="400"
+                Margin="8"
+                BorderBrush="Black"
+                BorderThickness="2"
+                FontSize="14"
+                ItemsSource="{Binding dummyList}">
+                <ListBox.Resources>
+                    <DataTemplate DataType="{x:Type vm:wf_CustomerDocumentViewModel}">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding StartText}" />
+                                <TextBlock
+                                    Background="{Binding HighlightBrushBG}"
+                                    Foreground="{Binding HighlightBrushFG}"
+                                    Text="{Binding HighlightedText}" />
+                                <TextBlock Text="{Binding EndText}" />
+                            </StackPanel>
+                            <TextBlock Text="{Binding Email}" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_SupplierDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding StartText}" />
+                                    <TextBlock
+                                        Background="{Binding HighlightBrushBG}"
+                                        Foreground="{Binding HighlightBrushFG}"
+                                        Text="{Binding HighlightedText}" />
+                                    <TextBlock Text="{Binding EndText}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_ImageEditDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="290"
+                                    Height="290"
+                                    Source="{Binding Thumbnail}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_ProductDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{Binding ThumbnailImage}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding StartText}" />
+                                    <TextBlock
+                                        Background="{Binding HighlightBrushBG}"
+                                        Foreground="{Binding HighlightBrushFG}"
+                                        Text="{Binding HighlightedText}" />
+                                    <TextBlock Text="{Binding EndText}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:wf_ProductSkuDocumentViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <Image
+                                    Width="32"
+                                    Height="32"
+                                    Source="{Binding MenuImageThumb}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" Type - " />
+                                    <TextBlock Text="{Binding TYP}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding TYPName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" Design - " />
+                                    <TextBlock Text="{Binding D}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding DName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" Fabric Base - " />
+                                    <TextBlock Text="{Binding FB}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding FBName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" Size - " />
+                                    <TextBlock Text="{Binding SZ}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding SZName}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" Colour - " />
+                                    <TextBlock Text="{Binding C}" />
+                                    <TextBlock Text=" - " />
+                                    <TextBlock Text="{Binding CName}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                </ListBox.Resources>
+            </ListBox>
+
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button Margin="8" IsCancel="True">Cancel</Button>
+            <Button
+                Margin="8"
+                Click="acceptButton_Click"
+                IsDefault="True">
+                OK
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>
+

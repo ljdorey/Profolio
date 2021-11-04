@@ -1,0 +1,678 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:vm="clr-namespace:WFInventory.ViewModels">
+
+
+
+    <Style
+        x:Key="wfBaseTextInputBox"
+        BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderBrush" Value="LightGreen" />
+    </Style>
+
+    <Style
+        x:Key="wfRegularTextInput"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="OneWay" Path=".">
+                    <Binding.ValidationRules>
+                        <vm:RegularTextValdationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="wfRegularTextView"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="OneWay" Path="." />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="blue" />
+        <Setter Property="IsReadOnly" Value="True" />
+    </Style>
+
+    <Style
+        x:Key="wfRegularTextViewLarge"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="OneWay" Path="." />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="blue" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="SpellCheck.IsEnabled" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="TextAlignment" Value="Left" />
+    </Style>
+
+
+    <Style
+        x:Key="wfLimitToThreeAlphaTextBox"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="TwoWay" Path=".">
+                    <Binding.ValidationRules>
+                        <vm:AZOnlyValidationRule />
+                        <vm:TextLengthValidationRule Max="3" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="wfLimitTo8AlphaTextBox"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="TwoWay" Path=".">
+                    <Binding.ValidationRules>
+                        <vm:AZOnlyValidationRule />
+                        <vm:TextLengthValidationRule Max="8" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style
+        x:Key="wfRegularTextInputLarge"
+        BasedOn="{StaticResource wfBaseTextInputBox}"
+        TargetType="{x:Type vm:ClickSelectTextBox}">
+        <Setter Property="Text">
+            <Setter.Value>
+                <Binding Mode="OneWay" Path="." />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="SpellCheck.IsEnabled" Value="True" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="TextAlignment" Value="Left" />
+    </Style>
+
+
+
+
+    <Style
+        x:Key="wfBaseDecimalTextBox"
+        BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="BorderBrush" Value="LightGreen" />
+    </Style>
+
+
+    <Style
+        x:Key="wfNumericInput"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}" />
+
+    <Style
+        x:Key="wfNumericCalc"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="BorderBrush" Value="blue" />
+        <Setter Property="IsReadOnly" Value="True" />
+    </Style>
+
+    <Style
+        x:Key="wfNumericInputCAD"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" CAD" />
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+    <Style
+        x:Key="wfNumericInputPercent"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" %" />
+    </Style>
+
+    <Style
+        x:Key="wfNumericInputMoney"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+    <Style
+        x:Key="wfNumericInputUSD"
+        BasedOn="{StaticResource wfBaseDecimalTextBox}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" USD" />
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+
+    <Style
+        x:Key="wfNumericCalcMoney"
+        BasedOn="{StaticResource wfNumericCalc}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+    <Style
+        x:Key="wfNumericCalcCAD"
+        BasedOn="{StaticResource wfNumericCalc}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" CAD" />
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+
+    <Style
+        x:Key="wfNumericCalcPercent"
+        BasedOn="{StaticResource wfNumericCalc}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" %" />
+    </Style>
+
+
+
+    <Style
+        x:Key="wfNumericCalcUSD"
+        BasedOn="{StaticResource wfNumericCalc}"
+        TargetType="{x:Type vm:DecimalClickSelectTextBox}">
+        <Setter Property="materialDesign:TextFieldAssist.SuffixText" Value=" USD" />
+        <Setter Property="materialDesign:TextFieldAssist.PrefixText" Value="$ " />
+    </Style>
+
+
+
+    <Style
+        x:Key="wfComboSimple"
+        BasedOn="{StaticResource MaterialDesignFilledComboBox}"
+        TargetType="{x:Type ComboBox}">
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="8" />
+    </Style>
+
+    <Style
+        x:Key="wfComboHelperList"
+        BasedOn="{StaticResource MaterialDesignFilledComboBox}"
+        TargetType="{x:Type ComboBox}">
+        <Setter Property="ItemsSource" Value="{Binding .}" />
+        <Setter Property="DisplayMemberPath" Value="{Binding DisplayPropertyName}" />
+        <Setter Property="materialDesign:HintAssist.Hint" Value="{Binding Hint}" />
+        <Setter Property="ToolTip" Value="{Binding ToolTip}" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="8" />
+    </Style>
+
+    <Style
+        x:Key="wfComboHelper"
+        BasedOn="{StaticResource MaterialDesignFilledComboBox}"
+        TargetType="{x:Type ComboBox}">
+        <Setter Property="DisplayMemberPath" Value="{Binding DisplayPropertyName}" />
+        <Setter Property="materialDesign:HintAssist.Hint" Value="{Binding Hint}" />
+        <Setter Property="ToolTip" Value="{Binding ToolTip}" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="8" />
+    </Style>
+
+
+    <Style
+        x:Key="wfComboEnum"
+        BasedOn="{StaticResource MaterialDesignFilledComboBox}"
+        TargetType="{x:Type ComboBox}">
+        <Setter Property="ItemsSource" Value="{Binding ., Mode=OneTime}" />
+        <Setter Property="SelectedValue" Value="{Binding EnumValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="SelectedValuePath" Value="Key" />
+        <Setter Property="DisplayMemberPath" Value="Value" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="ToolTip" Value="{Binding Tooltip}" />
+        <Setter Property="materialDesign:HintAssist.Hint" Value="{Binding Hint}" />
+    </Style>
+
+    <Style
+        x:Key="wfComboHelperEnum"
+        BasedOn="{StaticResource MaterialDesignFilledComboBox}"
+        TargetType="{x:Type ComboBox}">
+        <Setter Property="SelectedValuePath" Value="Key" />
+        <Setter Property="DisplayMemberPath" Value="Value" />
+        <Setter Property="materialDesign:HintAssist.FloatingScale" Value="0.75" />
+        <Setter Property="materialDesign:TextFieldAssist.HasFilledTextField" Value="True" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="8" />
+    </Style>
+
+    <Style
+        x:Key="wfBasicListView"
+        BasedOn="{StaticResource MaterialDesignCardsListBox}"
+        TargetType="ListView">
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="Margin" Value="8,8,8,8" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                                    x:Name="ItemBorder"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="AliceBlue" />
+                                        <Setter TargetName="ItemBorder" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Opacity=".1" Color="AliceBlue" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="2,2,2,2" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter Property="IsSelected" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="2">
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style
+        x:Key="wfBasicListViewEx"
+        BasedOn="{StaticResource MaterialDesignCardsListBox}"
+        TargetType="vm:NoDeselectListView">
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="Margin" Value="8,8,8,8" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                                    x:Name="ItemBorder"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="AliceBlue" />
+                                        <Setter TargetName="ItemBorder" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Opacity=".1" Color="AliceBlue" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="2,2,2,2" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter Property="IsSelected" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="2">
+                        <ScrollViewer CanContentScroll="True">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="wfBasicListViewMultiEx"
+        BasedOn="{StaticResource MaterialDesignCardsListBox}"
+        TargetType="vm:NoDeselectListView">
+        <Setter Property="SelectionMode" Value="Single" />
+        <Setter Property="Margin" Value="8,8,8,8" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border
+                                    x:Name="ItemBorder"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="ItemBorder" Property="BorderBrush" Value="AliceBlue" />
+                                        <Setter TargetName="ItemBorder" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Opacity=".1" Color="AliceBlue" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="2,2,2,2" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter Property="IsSelected" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="2">
+                        <ScrollViewer CanContentScroll="True">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="wfListViewNoSelect"
+        BasedOn="{StaticResource MaterialDesignCardsListBox}"
+        TargetType="ListView">
+        <Setter Property="Margin" Value="8,8,8,8" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="2,2,2,2" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="2">
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style
+        x:Key="wfImageListView"
+        BasedOn="{StaticResource MaterialDesignCardsListBox}"
+        TargetType="ListView">
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                    <Style.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="true">
+                            <Setter Property="IsSelected" Value="true" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="2">
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="wfNameListDisplay" TargetType="ItemsControl">
+        <Setter Property="ItemsSource" Value="{Binding CheckedList}" />
+        <Setter Property="Margin" Value="4,0,4,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="32" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="0,0,0,4"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="4"
+                                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                    Text="{Binding Title}" />
+                                <Button
+                                    Margin="8,0,0,0"
+                                    Command="{Binding EditListCommand}"
+                                    Content="Edit"
+                                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+                            </StackPanel>
+                            <ScrollViewer Grid.Row="1">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type vm:FilterChipWrapper}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="AliceBlue" Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Margin" Value="2,0,0,2" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style
+        x:Key="wfDocumentVMListBox"
+        BasedOn="{StaticResource MaterialDesignListBox}"
+        TargetType="ListBox">
+        <Setter Property="BorderBrush" Value="AliceBlue" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding SearchName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <DataTemplate x:Key="wfSearchResultText">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding StartText}" />
+            <TextBlock
+                Background="{Binding HighlightBrushBG}"
+                Foreground="{Binding HighlightBrushFG}"
+                Text="{Binding HighlightedText}" />
+            <TextBlock Text="{Binding EndText}" />
+        </StackPanel>
+    </DataTemplate>
+
+    <Style
+        x:Key="wfFilterChipListBox"
+        BasedOn="{StaticResource MaterialDesignListBox}"
+        TargetType="ListBox">
+        <Setter Property="BorderBrush" Value="AliceBlue" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type vm:FilterChipWrapper}">
+                    <StackPanel>
+                        <CheckBox IsChecked="{Binding IsChecked}">
+                            <TextBlock DataContext="{Binding Document}" Text="{Binding SearchName}" />
+                        </CheckBox>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="AliceBlue" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="44" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Border
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                BorderBrush="AliceBlue"
+                                BorderThickness="1" />
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="0,0,0,4"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="8"
+                                    Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                    Text="{Binding Title}" />
+                            </StackPanel>
+                            <ScrollViewer Grid.Row="1">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsSource" Value="{Binding}" />
+    </Style>
+</ResourceDictionary>
