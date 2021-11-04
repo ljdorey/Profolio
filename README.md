@@ -1,7 +1,7 @@
 # Profolio
 
 Alexandra Dorey's Portfolio for Interviews
-A small smattering of code for a portfolio from a past project...
+A small smattering of code from a past project...
 
 General Design: 
 
